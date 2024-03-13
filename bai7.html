@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dijkstra's Algorithm</title>
+    <h1>Thuật toán Dijsktra </h1>
+    <h>đường đi ngắn nhất : </h>
+    <style>
+        .node {
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="shortestPaths"></div>
+
+    <script>
+        const graph = {
+            A: {B: 1, C: 4},
+            B: {A: 1, C: 2, D: 5},
+            C: {A: 4, B: 2, D: 1},
+            D: {B: 5, C: 1}
+        };
+
+        function dijkstra(graph, start) {
+            let distances = {};
+            for (let node in graph) {
+                distances[node] = Infinity;
+            }
+            distances[start] = 0;
+
+            let queue = [start];
+
+            while (queue.length > 0) {
+                let current = queue.shift();
+
+                for (let neighbor in graph[current]) {
+                    let distance = graph[current][neighbor];
+                    let oldDistance = distances[neighbor];
+                    let newDistance = distances[current] + distance;
+
+                    if (newDistance < oldDistance) {
+                        distances[neighbor] = newDistance;
+                        queue.push(neighbor);
+                    }
+                }
+            }
+
+            return distances;
+        }
+
+        const shortestPaths = dijkstra(graph, 'A');
+        const shortestPathsDiv = document.getElementById('shortestPaths');
+
+        for (let node in shortestPaths) {
+            const nodeDiv = document.createElement('div');
+            nodeDiv.className = 'node';
+            nodeDiv.textContent = `phần ngắn nhất từ A đến ${node} là ${shortestPaths[node]}`;
+            shortestPathsDiv.appendChild(nodeDiv);
+        }
+    </script>
+</body>
+</html>

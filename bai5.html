@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DFS Algorithm</title>
+</head>
+<body>
+  <h1>thuật toán DFS </h1>
+  <h>Kết quả duyệt DFS: </h>
+    <div id="result"></div>
+    <script>
+        // Định nghĩa đồ thị
+        let graph = {
+            'A': ['B', 'C'],
+            'B': ['A', 'D', 'E'],
+            'C': ['A', 'F'],
+            'D': ['B'],
+            'E': ['B', 'F'],
+            'F': ['C', 'E']
+        };
+
+        // Hàm DFS
+        function dfs(graph, startNode) {
+            let visited = {};
+            let stack = [startNode];
+
+            while (stack.length > 0) {
+                let node = stack.pop();
+
+                if (!visited[node]) {
+                    visited[node] = true;
+                    let neighbors = graph[node];
+
+                    for (let i = 0; i < neighbors.length; i++) {
+                        stack.push(neighbors[i]);
+                    }
+                }
+            }
+
+            return Object.keys(visited);
+        }
+
+        // Gọi hàm DFS và in kết quả ra màn hình chính
+        document.getElementById('result').innerText = dfs(graph, 'A');
+    </script>
+</body>
+</html>
